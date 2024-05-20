@@ -1,6 +1,7 @@
 // Copyright 2021-2022 Workiva.
 // Licensed under the Apache License, Version 2.0. Please see https://github.com/Workiva/opentelemetry-dart/blob/master/LICENSE for more information
 
+import 'package:fixnum/fixnum.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../../api.dart' as api;
@@ -161,7 +162,7 @@ class CollectorExporter implements api.SpanExporter {
       case double:
         return pb_common.AnyValue(doubleValue: value);
       case int:
-        return pb_common.AnyValue(intValue: value);
+        return pb_common.AnyValue(intValue: Int64(value));
       case List:
         final list = value as List;
         if (list.isNotEmpty) {

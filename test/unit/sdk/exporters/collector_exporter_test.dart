@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. Please see https://github.com/Workiva/opentelemetry-dart/blob/master/LICENSE for more information
 
 @TestOn('vm')
+import 'package:fixnum/fixnum.dart';
 import 'package:mockito/mockito.dart';
 import 'package:opentelemetry/api.dart' as api;
 import 'package:opentelemetry/sdk.dart' as sdk;
@@ -59,7 +60,10 @@ void main() {
         resource,
         instrumentationLibrary,
         limits: limits,
-        attributes: [api.Attribute.fromBoolean('bool', true)],
+        attributes: [
+          api.Attribute.fromBoolean('bool', true),
+          api.Attribute.fromInt('int', 1),
+        ],
         kind: api.SpanKind.internal,
         links: [
           api.SpanLink(span1.spanContext, attributes: [
@@ -108,7 +112,11 @@ void main() {
                       attributes: [
                         pb_common.KeyValue(
                             key: 'bool',
-                            value: pb_common.AnyValue(boolValue: true))
+                            value: pb_common.AnyValue(boolValue: true)),
+                        pb_common.KeyValue(
+                          key: 'int',
+                          value: pb_common.AnyValue(intValue: Int64(1)),
+                        ),
                       ],
                       status: pb.Status(
                           code: pb.Status_StatusCode.STATUS_CODE_UNSET,
